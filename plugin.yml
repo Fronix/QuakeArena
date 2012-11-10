@@ -1,0 +1,11 @@
+name: QuakeArena
+main: se.fronix.quake.Quake;
+version: 0.1
+depend: [BattleArena]
+authors: [fronix, alkarin_v]
+
+commands:
+   quake:
+      aliases:
+      description: /quake
+      usage: /quake
