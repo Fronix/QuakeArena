@@ -5,6 +5,8 @@ import mc.alk.arena.util.Log;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import se.fronix.quake.QuakeArena;
+
 public class Quake extends JavaPlugin{
 	static Quake plugin;
 	
@@ -23,6 +25,10 @@ public class Quake extends JavaPlugin{
 	@Override
 	public void onDisable(){
 		Log.info("[" + getName()+ "] v" + getDescription().getVersion()+ " stopping!");
+	}
+	
+	public static Quake getSelf() {
+		return plugin;
 	}
 
 }
