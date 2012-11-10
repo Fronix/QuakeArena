@@ -2,6 +2,8 @@ package se.fronix.quake;
 
 import mc.alk.arena.objects.arenas.Arena;
 import mc.alk.arena.objects.events.MatchEventHandler;
+import mc.alk.arena.serializers.Persist;
+import mc.alk.arena.util.Log;
 
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;

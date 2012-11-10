@@ -6,6 +6,3 @@ authors: [fronix, alkarin_v]
 
 commands:
    quake:
-      aliases:
-      description: /quake
-      usage: /quake
