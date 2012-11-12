@@ -29,7 +29,7 @@ quake:
         items: # ignored if options doesnt have "giveItems"
             - bread: 5
     onDeath:
-        options: [respawn, clearInventory]
+        options: []
     onComplete:
         options: [teleportOut, deEnchant, clearInventory, wgClearRegion]
     winner:

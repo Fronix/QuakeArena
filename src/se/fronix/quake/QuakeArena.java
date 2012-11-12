@@ -5,18 +5,47 @@ import mc.alk.arena.objects.events.MatchEventHandler;
 import mc.alk.arena.serializers.Persist;
 import mc.alk.arena.util.Log;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.SmallFireball;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.util.Vector;
 
 public class QuakeArena extends Arena{
 	static int damage = 3;
+	static int missileInt = 76;
+	
+	@Persist
+	String worldName;
+	
+	World world;
+	
+	@Override
+	public void onOpen(){
+		world = Bukkit.getWorld(worldName);
+
+		if (world == null){
+			Log.err("[Quake] worldName was null in arena " + getName());
+			getMatch().cancelMatch();
+			return;
+		}
+	}
+	
+	@Override
+	public void onFinish(){
+		
+	}
+	
+	@Override
+	public void onStart(){
+
+	}
+
 	
 	/**
 	 * This is how you create customized events.  You specify a method as a @MatchEventHandler
@@ -28,7 +57,7 @@ public class QuakeArena extends Arena{
 	 *
 	 * @param event: Which bukkit event are we listening to
 	 */	
-	@MatchEventHandler(suppressCastWarnings=true)
+	@MatchEventHandler
 	public void onEntityDamage(EntityDamageByEntityEvent event) {
 		if (event.isCancelled())
 			return;
@@ -37,16 +66,17 @@ public class QuakeArena extends Arena{
 		event.setDamage(damage);
 	}
 	
-	@MatchEventHandler(suppressCastWarnings=true)
+	@MatchEventHandler
 	public void onPlayerInteract(PlayerInteractEvent event){
-		Player player = event.getPlayer();
-		
-	
-		if(event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.LEFT_CLICK_AIR)){
-			if(player.getItemInHand().getType().equals(Material.REDSTONE_TORCH_ON)){
-				final Vector direction = player.getPlayer().getEyeLocation().getDirection().multiply(2);
-				final Fireball fireball = player.getPlayer().getWorld().spawn(player.getPlayer().getEyeLocation().add(direction.getX(), direction.getY(), direction.getZ()), SmallFireball.class);
-				fireball.setShooter(player.getPlayer());
+        Player player = event.getPlayer();
+        
+		if(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_AIR){
+			if(event.getPlayer().getItemInHand().equals(Material.REDSTONE_LAMP_ON) || event.getPlayer().getItemInHand().equals(Material.REDSTONE_LAMP_OFF)){
+		          Fireball fireball = (Fireball)player.launchProjectile(Fireball.class);
+		          fireball.setIsIncendiary(true);
+		          fireball.setShooter(player);
+		          fireball.teleport(player.getLocation().add(0.0D, 1.0D, 0.0D));
+		          player.chat(ChatColor.RED + "I'M A' FIRIN' MAH " + ChatColor.AQUA + " LAZER!!");
 			}
 		}
 		

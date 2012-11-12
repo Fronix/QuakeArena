@@ -18,6 +18,8 @@ public class Quake extends JavaPlugin{
 		/// Like 'damage: 15'
 		FileConfiguration config = getConfig();
 		QuakeArena.damage = config.getInt("damage", 3);
+		QuakeArena.missileInt = config.getInt("missileItem", 76);
+		saveDefaultConfig();
 		Log.info("[" + getName()+ "] v" + getDescription().getVersion()+ " enabled!");
 	}
 
